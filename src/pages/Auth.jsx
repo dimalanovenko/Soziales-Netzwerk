@@ -1,11 +1,12 @@
 import {useDispatch} from "react-redux";
-import {loginSuccess} from "../features/authSlice";
+import {loginSuccess} from "../features/authSlice.js";
 
 import axios from "axios";
 
 import {useForm} from "react-hook-form";
 import {useState} from "react";
 import {useNavigate} from "react-router";
+import {getPosts} from "../features/feedSlice.js";
 
 const Auth = () => {
     const dispatch = useDispatch();
@@ -54,8 +55,8 @@ const Auth = () => {
 
     return (
         <div className="flex flex-col items-center text-white gap-3">
-            <h1 className="text-7xl text-pink-400 font-bold m-20">
-                dimagram
+            <h1 className="text-7xl text-teal-400 font-bold m-20">
+                SwapLink
             </h1>
             <h1 className="text-2xl font-bold">
                 {isSignUp ? "SignUp" : "SignIn"}
@@ -65,7 +66,7 @@ const Auth = () => {
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <input
-                    className="border border-pink-400 rounded-lg py-1 px-2"
+                    className="border border-teal-400 rounded-lg py-1 px-2"
                     type="text"
                     placeholder="username..."
                     {...register("username", {required: "username required"})}
@@ -73,7 +74,7 @@ const Auth = () => {
                 {errors.username && <span className="text-red-500">{errors.username.message}</span>}
 
                 <input
-                    className="border border-pink-400 rounded-lg py-1 px-2"
+                    className="border border-teal-400 rounded-lg py-1 px-2"
                     type="password"
                     placeholder="pasword..."
                     {...register("password", {required: "password required"})}
@@ -83,7 +84,7 @@ const Auth = () => {
                 {isSignUp && (
                     <>
                         <input
-                            className="border border-pink-400 rounded-lg py-1 px-2"
+                            className="border border-teal-400 rounded-lg py-1 px-2"
                             type="password"
                             placeholder="confirm password..."
                             {...register("confirm_password", {required: "confirm password..."})}
@@ -93,7 +94,8 @@ const Auth = () => {
                     </>
                 )}
                 <button
-                    className="bg-zinc-800 text-pink-400 rounded-2xl py-2 px-4 cursor-pointer"
+                    // onClick={() => dispatch(getPosts())}
+                    className="bg-zinc-800 text-teal-400 rounded-2xl py-2 px-4 cursor-pointer"
                     type="submit"
                 >
                     {isSignUp ? "SignUp" : "SignIn"}
@@ -101,7 +103,7 @@ const Auth = () => {
             </form>
             <button
                 onClick={() => setIsSignUp(!isSignUp)}>
-                {isSignUp ? "Already have an account? SignIn" : "Dont have any account? SignUp"}
+                {isSignUp ? `Already have an account? SignIn` : `Dont have any account? SignUp`}
             </button>
         </div>
     );

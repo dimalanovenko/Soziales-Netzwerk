@@ -17,10 +17,33 @@ export const getProfile = createAsyncThunk(
         return response.data;
     })
 
+export const changeProfile = createAsyncThunk(
+    'profile/changeProfile',
+    async ({username, avatar, age, bio, fullName, balance}) => {
+        const response = await axios.put('http://49.13.31.246:9191/me',
+            {
+                "username": username,
+                "avatar": avatar,
+                "age": age,
+                "bio": bio,
+                "fullName": fullName,
+                "balance": balance
+            },
+            {
+                headers: {
+                    "x-access-token": authInitialState.token
+                }
+            }
+        );
+        console.log(response.data);
+        return response.data;
+    })
+
 const profileSlice = createSlice({
     name: 'profile',
     initialState: {
         profile: {
+            _id: null,
             username: null,
             followers: null,
             following: null,
@@ -32,7 +55,11 @@ const profileSlice = createSlice({
         builder
             .addCase(getProfile.fulfilled, (state, action) => {
                 state.profile = action.payload;
-                console.log(state.profile.username, state.profile.followers, state.profile.following);
+                console.log(state.profile._id);
+            })
+            .addCase(changeProfile.fulfilled, (state, action) => {
+                state.profile = action.payload;
+                console.log(state.profile);
             })
     }
 })
